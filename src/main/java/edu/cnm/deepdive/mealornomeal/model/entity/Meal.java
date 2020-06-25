@@ -2,12 +2,21 @@ package edu.cnm.deepdive.mealornomeal.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(
+    indexes = {
+        @Index(columnList = "name")
+    }
+)
 public class Meal {
 
   @Id
@@ -27,6 +36,51 @@ public class Meal {
   @Column(name = "requirements", length = 200)
   private String requirements;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "creator_id")
+  private User creator;
 
+  public Long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getInstruction() {
+    return instruction;
+  }
+
+  public void setInstruction(String instruction) {
+    this.instruction = instruction;
+  }
+
+  public Integer getPrepTime() {
+    return prepTime;
+  }
+
+  public void setPrepTime(Integer prepTime) {
+    this.prepTime = prepTime;
+  }
+
+  public String getRequirements() {
+    return requirements;
+  }
+
+  public void setRequirements(String requirements) {
+    this.requirements = requirements;
+  }
+
+  public User getCreator() {
+    return creator;
+  }
+
+  public void setCreator(User creator) {
+    this.creator = creator;
+  }
 }

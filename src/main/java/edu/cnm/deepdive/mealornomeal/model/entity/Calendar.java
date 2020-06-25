@@ -9,8 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import org.apache.catalina.User;
+
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -23,11 +22,11 @@ public class Calendar {
 
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "meal_id")
+  @JoinColumn(name = "meal_id", nullable = false, updatable = false)
   private Meal meal;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private Calendar creator;
 
   @Column(nullable = false, length = 25)
@@ -37,6 +36,28 @@ public class Calendar {
   @Column(nullable = false, length = 20)
   private Long mealSlot;
 
+  public Long getId() {
+    return id;
+  }
 
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Meal getMeal() {
+    return meal;
+  }
+
+  public Calendar getCreator() {
+    return creator;
+  }
+
+  public Long getCalendarDate() {
+    return calendarDate;
+  }
+
+  public Long getMealSlot() {
+    return mealSlot;
+  }
 
 }

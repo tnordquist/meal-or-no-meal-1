@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-import android.os.Parcelable.Creator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,24 +40,35 @@ public class Calendar {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public Meal getMeal() {
     return meal;
+  }
+
+  public void setMeal(Meal meal) {
+    this.meal = meal;
   }
 
   public Calendar getCreator() {
     return creator;
   }
 
+  public void setCreator(Calendar creator) {
+    this.creator = creator;
+  }
+
   public Long getCalendarDate() {
     return calendarDate;
+  }
+
+  public void setCalendarDate(Long calendarDate) {
+    this.calendarDate = calendarDate;
   }
 
   public Long getMealSlot() {
     return mealSlot;
   }
 
+  public void setMealSlot(Long mealSlot) {
+    this.mealSlot = mealSlot;
+  }
 }

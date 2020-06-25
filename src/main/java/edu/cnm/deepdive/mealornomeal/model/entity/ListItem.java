@@ -27,6 +27,29 @@ public class ListItem {
   @JoinColumn(name = "user_id")
   private Long user_id;
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setQuantity(String quantity) {
+    this.quantity = quantity;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getQuantity() {
+    return quantity;
+  }
+
+  public Long getUser_id() {
+    return user_id;
+  }
 }
 
 }

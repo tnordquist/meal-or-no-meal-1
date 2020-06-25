@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class ListItem {
 
@@ -25,7 +26,7 @@ public class ListItem {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  private Long user_id;
+  private User user_id;
 
   public void setName(String name) {
     this.name = name;
@@ -47,9 +48,9 @@ public class ListItem {
     return quantity;
   }
 
-  public Long getUser_id() {
+  public User getUser_id() {
     return user_id;
   }
 }
 
-}
+

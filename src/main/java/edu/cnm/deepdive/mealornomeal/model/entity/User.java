@@ -17,10 +17,6 @@ import javax.persistence.Id;
     private Long id;
 
 
-    @Column(name = "password", nullable = false, length = 20)
-    private String password;
-
-
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
@@ -28,15 +24,11 @@ import javax.persistence.Id;
       return id;
     }
 
-    public String getPassword() {
-      return password;
-    }
-
     public String getName() {
       return name;
     }
 
-    public void setId(Long id) {
-      this.id = id;
+    public void setName(String name) {
+      this.name = name;
     }
   }

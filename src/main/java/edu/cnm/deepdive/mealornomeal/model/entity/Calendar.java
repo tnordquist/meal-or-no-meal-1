@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,14 +27,14 @@ public class Calendar {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
-  private Calendar creator;
+  private User creator;
 
-  @Column(nullable = false, length = 25)
-  private Long calendarDate;
+  @Column(nullable = false)
+  private LocalDate date;
 
 
-  @Column(nullable = false, length = 20)
-  private Long mealSlot;
+  @Column(nullable = false)
+  private int mealSlot;
 
   public Long getId() {
     return id;
@@ -48,27 +48,27 @@ public class Calendar {
     this.meal = meal;
   }
 
-  public Calendar getCreator() {
+  public User getCreator() {
     return creator;
   }
 
-  public void setCreator(Calendar creator) {
+  public void setCreator(User creator) {
     this.creator = creator;
   }
 
-  public Long getCalendarDate() {
-    return calendarDate;
+  public LocalDate getDate() {
+    return date;
   }
 
-  public void setCalendarDate(Long calendarDate) {
-    this.calendarDate = calendarDate;
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 
-  public Long getMealSlot() {
+  public int getMealSlot() {
     return mealSlot;
   }
 
-  public void setMealSlot(Long mealSlot) {
+  public void setMealSlot(int mealSlot) {
     this.mealSlot = mealSlot;
   }
 }

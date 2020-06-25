@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     indexes = {
@@ -33,8 +34,8 @@ public class Meal {
   @Column(name = "prep_time")
   private Integer prepTime;
 
-  @Column(name = "requirements", length = 200)
-  private String requirements;
+  @Column(name = "required", length = 200)
+  private String required;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "creator_id")
@@ -69,11 +70,11 @@ public class Meal {
   }
 
   public String getRequirements() {
-    return requirements;
+    return required;
   }
 
   public void setRequirements(String requirements) {
-    this.requirements = requirements;
+    this.required = requirements;
   }
 
   public User getCreator() {

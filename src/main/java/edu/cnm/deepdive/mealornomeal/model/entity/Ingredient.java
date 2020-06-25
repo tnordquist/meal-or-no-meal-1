@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Ingredient {
 
@@ -23,9 +25,9 @@ public class Ingredient {
   @Column(name = "quantity", length = 50, nullable = false)
   private String quantity;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "meal_id")
-  private Long meal_id;
+  private Meal meal_id;
 
   public void setName(String name) {
     this.name = name;
@@ -47,7 +49,7 @@ public class Ingredient {
     return quantity;
   }
 
-  public Long getMeal_id() {
+  public Meal getMeal_id() {
     return meal_id;
   }
 }

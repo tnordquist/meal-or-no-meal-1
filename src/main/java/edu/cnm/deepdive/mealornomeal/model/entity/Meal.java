@@ -34,7 +34,7 @@ public class Meal {
   @Column(name = "prep_time")
   private Integer prepTime;
 
-  @Column(name = "required", length = 200)
+  @Column(name = "requirements", length = 200)
   private String required;
 
   @ManyToOne(fetch = FetchType.EAGER)

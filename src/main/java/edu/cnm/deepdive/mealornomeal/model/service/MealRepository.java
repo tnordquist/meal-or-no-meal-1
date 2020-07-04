@@ -1,5 +1,8 @@
 package edu.cnm.deepdive.mealornomeal.model.service;
 
-public interface MealRepository {
+import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MealRepository extends JpaRepository <Meal, Long>{
 
 }

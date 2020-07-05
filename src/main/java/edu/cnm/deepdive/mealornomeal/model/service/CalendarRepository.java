@@ -9,12 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
   @Query
-  Iterable<Calendar> getAllByOrderByTextAsc();
+  Iterable<Calendar> getAllByNameOrderByTextAsc(String name);
 
   @Query
-  Iterable<Calendar> getAllBySourceOrderByTextAsc(Source source);
+  Iterable<Calendar> getAllByCreator_IdOrderByTextAsc(String id);
 
-  @Query
-  Iterable<Calendar> getAllByTagsContainingOrderByTextAsc(Tag tag);
 
 }

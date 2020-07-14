@@ -46,4 +46,9 @@ import javax.persistence.Id;
     public void setOauthKey(String oauthKey) {
       this.oauthKey = oauthKey;
     }
+
+    public enum Role {
+      USER, CREATOR
+    }
+
   }

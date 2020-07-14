@@ -1,5 +1,8 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
+import edu.cnm.deepdive.mealornomeal.controller.view.FlatMeal;
+import java.net.URI;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,15 +13,21 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.stereotype.Component;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
+@Component
 @Table(
     indexes = {
         @Index(columnList = "name")
     }
 )
-public class Meal {
+public class Meal implements FlatMeal {
+
+  private static EntityLinks entityLinks;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -84,4 +93,22 @@ public class Meal {
   public void setCreator(User creator) {
     this.creator = creator;
   }
+
+  @PostConstruct
+  private void initHateoas() {
+    //noinspection ResultOfMethodCallIgnored
+    entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(
+      @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") EntityLinks entityLinks) {
+    Meal.entityLinks = entityLinks;
+  }
+
+  @Override
+  public URI getHref() {
+    return (id != null) ? entityLinks.linkForItemResource(Meal.class, id).toUri() : null;
+  }
+
 }

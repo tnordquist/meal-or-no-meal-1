@@ -17,7 +17,7 @@ public class UserService {
   }
 
   public synchronized User readOrCreateOne(String oauthKey, String name) {
-    return userRepository.findFirstByOauthkey(oauthKey)
+    return userRepository.findFirstByOauthKey(oauthKey)
         .orElseGet(() -> {
           User user = new User();
           user.setOauthKey(oauthKey);

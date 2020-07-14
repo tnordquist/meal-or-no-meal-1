@@ -11,5 +11,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
   @Query
   Iterable<User> getAllByNameContainingOrderByNameAsc(Long id);
 
-  Optional<User> findFirstByOauthkey(String oauthKey);
+  Optional<User> findFirstByOauthKey(String oauthKey);
 }

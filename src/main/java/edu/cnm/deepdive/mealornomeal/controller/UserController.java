@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.User;
-import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

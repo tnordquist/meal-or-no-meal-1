@@ -53,13 +53,11 @@ public class MealController {
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Meal> post(@RequestBody Meal meal) {
     if (meal.getCreator() != null && meal.getCreator().getId() != null) {
-      meal.setCreator(
-          userRepository.findById(
+      meal.setCreator(userRepository.findById(
               meal.getCreator().getId()
-          ).orElseThrow(NoSuchElementException::new)
-      );
+          ).orElseThrow(NoSuchElementException::new));
     }
-    return ResponseEntity.created(meal.getHref())
+    return ResponseEntity.created(meal.getHref()).body(meal);
   }
 
   @PutMapping(value = "/{id:\\d+}",

@@ -13,7 +13,8 @@ import javax.persistence.ManyToOne;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-public class Calendar {
+public class
+Calendar {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

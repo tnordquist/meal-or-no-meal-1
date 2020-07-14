@@ -32,7 +32,6 @@ public class Calendar {
   @Column(nullable = false)
   private LocalDate date;
 
-
   @Column(nullable = false)
   private int mealSlot;
 

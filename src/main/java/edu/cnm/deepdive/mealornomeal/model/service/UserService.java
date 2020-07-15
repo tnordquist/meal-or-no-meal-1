@@ -16,15 +16,15 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public synchronized User readOrCreateOne(String oauthKey, String name) {
-    return userRepository.findFirstByOauthkey(oauthKey)
-        .orElseGet(() -> {
-          User user = new User();
-          user.setOauthKey(oauthKey);
-          user.setName(name);
-          return userRepository.save(user);
-        });
-  }
+//  public synchronized User readOrCreateOne(String oauthKey, String name) {
+//    return userRepository.findFirstByOauthkey(oauthKey)
+//        .orElseGet(() -> {
+//          User user = new User();
+//          user.setOauthKey(oauthKey);
+//          user.setName(name);
+//          return userRepository.save(user);
+//        });
+//  }
 
   public Optional<User> get(Long id) {
     return userRepository.findById(id);

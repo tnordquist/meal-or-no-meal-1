@@ -1,14 +1,17 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
+import edu.cnm.deepdive.mealornomeal.model.entity.User;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,7 +53,7 @@ public class MealController {
 
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Meal> post(@RequestBody Meal meal) {
+  public ResponseEntity<Meal> postCreator(@RequestBody Meal meal) {
     if (meal.getCreator() != null && meal.getCreator().getId() != null) {
       meal.setCreator(userRepository.findById(
               meal.getCreator().getId()
@@ -98,6 +101,23 @@ public class MealController {
       existingMeal.setRequirements(meal.getRequirements());
     }
     return mealRepository.save(existingMeal);
+  }
+
+  @DeleteMapping(value = "/{id:\\d+}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable long id) {
+    mealRepository.findById(id)
+        .map((meal) -> {
+          Meal  = meal.getCreator();
+          User.forEach((quote) -> quote.setSource(null));
+          quoteRepository.saveAll(quotes);
+          return source;
+        })
+        .map((source) -> {
+          sourceRepository.delete(source);
+          return source;
+        })
+        .orElseThrow(NoSuchElementException::new);
   }
 
 }

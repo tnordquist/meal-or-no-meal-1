@@ -7,15 +7,25 @@ import javax.xml.transform.Source;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+/**
+ * This Repository gathers all requested data, organizes adn displays it per the instructions given.
+ */
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
+  /**
+   * This @Query organizes the searched calendars by date after getting them by their name.
+   * @param id
+   * @return
+   */
   @Query
   Iterable<Calendar> getAllByNameOrderByDateAsc(String id);
 
+  /**
+   * This @Query organizes the searched calendars by date after searching for them by dates.
+   * @param id
+   * @return
+   */
   @Query
   Iterable<Calendar> getAllByDateOrderByDateAsc(long id);
-
-  @Query
-  Iterable<Calendar> getById(String id);
 
 }

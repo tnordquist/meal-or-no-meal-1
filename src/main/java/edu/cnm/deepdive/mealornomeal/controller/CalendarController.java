@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * This Calendar Controller controls what calendar is being used and retains meals that have been
- * added via Meal Controller/Repository.
+ * added int the meal slots via Meal Controller/Repository.
+ * Below it is also declaring constants that will be used.
  */
 
 @RestController
@@ -37,7 +38,12 @@ public class CalendarController {
   private final CalendarRepository calendarRepository;
   private final UserRepository userRepository;
 
-
+  /**
+   * This @Autowire declares the controller parameters and, and also declares no instances.
+   * @param calendarRepository
+   * @param mealRepository
+   * @param userRepository
+   */
   @Autowired
   public CalendarController(CalendarRepository calendarRepository,
       MealRepository mealRepository, UserRepository userRepository) {
@@ -78,18 +84,6 @@ public class CalendarController {
     return calendarRepository.getAllByDateOrderByDateAsc(filter);
   }
 
-//  @PostMapping(
-//      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity<Calendar> postCalendarId(@RequestBody Calendar calendar, Authentication auth) {
-//    if (calendar.getCreator() != null && calendar.getCreator().getId() != null) {
-//      calendar.setCreator(
-//          userRepository.findById(
-//              calendar.getCreator().getId()
-//          ).orElseThrow(NoSuchElementException::new));
-//    }
-//    calendarRepository.save(calendar);
-//    return ResponseEntity.created(calendar.getHref()).body(calendar);
-//  }
 
   /**
    * This @PostMapping allows user to create a new calendar with saved meal slots.

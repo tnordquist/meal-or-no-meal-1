@@ -28,67 +28,82 @@ import org.springframework.stereotype.Component;
         @Index(columnList = "name")
     }
 )
+
+/**
+ * This Calendar Entity Class declares all of its own attributes along
+ * with attributes that are being joined together as foreign keys.
+ */
+
 public abstract class Calendar implements FlatCalendar {
 
   private static EntityLinks entityLinks;
 
+  /**
+   * This Column declares the calendar_id attribute and its conditions
+   * such as "nullable = false"
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "calendar_id", nullable = false, updatable = false)
   private Long id;
 
-
+  /**
+   * This JoinColumn declares the meal_id attribute and its conditions"
+   * It also gives the Calendar entity aces to the Meal Entity attributes"
+   */
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "meal_id", nullable = false, updatable = false)
   private Meal meal;
 
+  /**
+   * This JoinColumn declares the user_id attribute and its conditions"
+   * It also gives the Calendar entity aces to the User Entity attributes"
+   */
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User creator;
 
+  /**
+   * This Column declares the LocalDate attribute and its conditions
+   */
   @Column(nullable = false)
   private LocalDate date;
 
+  /**
+   * This Column declares the mealSlot attribute and its conditions
+   */
   @Column(nullable = false)
   private String mealSlot;
+
+
 
   public Long getId() {
     return id;
   }
-
-
   public Meal getMeal() {
     return meal;
   }
-
   public void setMeal(Meal meal) {
     this.meal = meal;
   }
-
   public User getCreator() {
     return creator;
   }
-
   public void setCreator(User creator) {
     this.creator = creator;
   }
-
   public LocalDate getDate() {
     return date;
   }
-
   public void setDate(LocalDate date) {
     this.date = date;
   }
-
   public String getMealSlot() {
     return mealSlot;
   }
-
   public void setMealSlot(String mealSlot) {
     this.mealSlot = mealSlot;
   }
-
   public void setId(Long id) {
     this.id = id;
   }

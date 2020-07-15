@@ -38,6 +38,10 @@ public class ListItem implements FlatListItem {
     this.quantity = quantity;
   }
 
+  public void setUser_id(User user_id) {
+    this.user_id = user_id;
+  }
+
   public Long getId() {
     return id;
   }

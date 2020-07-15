@@ -21,15 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final UserRepository userRepository;
-  private final MealRepository mealRepository;
-  private final ListRepository listRepository;
-  private final CalendarRepository calendarRepository;
 
-  public UserController(UserRepository userRepository, MealRepository mealRepository, ListRepository listRepository, CalendarRepository calendarRepository) {
+  public UserController(UserRepository userRepository) {
     this.userRepository = userRepository;
-        this.mealRepository = mealRepository;
-        this.listRepository = listRepository;
-        this.calendarRepository = calendarRepository;
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,18 +35,6 @@ public class UserController {
   public User get(@PathVariable long id ) {
     return userRepository.findById(id).orElseThrow(NoSuchFieldException::new);
   }
-
-  @PutMapping(value = "{id:\\d+}",
-      consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public User put(@PathVariable long id, @RequestBody User user) {
-    User existingUser = get(id);
-    if (user.getName() != null) {
-      existingUser.setName(user.getName());
-    }
-    if (user. != 0) {
-      existingUser.setSkillLevel(user.getSkillLevel());
-    }
-    return userRepository.save(existingUser);
 
 
 }

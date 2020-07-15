@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -44,15 +45,11 @@ public class Ingredient implements FlatIngredient {
   }
 
   @Override
-  public String getIngredient() {
-    return null;
-  }
-
-  @Override
   public URI getHref() {
     return null;
   }
 
+  @NonNull
   public String getName() {
     return name;
   }
@@ -61,7 +58,4 @@ public class Ingredient implements FlatIngredient {
     return quantity;
   }
 
-  public Meal getMeal_id() {
-    return meal_id;
-  }
 }

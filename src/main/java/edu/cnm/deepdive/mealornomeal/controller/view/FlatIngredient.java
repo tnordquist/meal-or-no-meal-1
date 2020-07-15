@@ -10,7 +10,9 @@ import org.springframework.lang.NonNull;
     Long getId();
 
     @NonNull
-    String getIngredient();
+    String getName();
+
+    String getQuantity();
 
     URI getHref();
 

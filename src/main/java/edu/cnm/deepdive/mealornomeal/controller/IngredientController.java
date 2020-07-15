@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.Ingredient;
+import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
 import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,50 +36,45 @@ public class IngredientController {
 
    */
   private final IngredientRepository ingredientRepository;
-  private final MealRepository mealRepository;
-  private final ListRepository listRepository;
 
   @Autowired
   public IngredientController(IngredientRepository ingredientRepository,
       MealRepository mealRepository, ListRepository listRepository){
     this.ingredientRepository = ingredientRepository;
-    this.mealRepository = mealRepository;
-    this.listRepository = listRepository;
   }
 
   @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Ingredient get(@PathVariable long id) {
     return ingredientRepository.findById(id).orElseThrow((NoSuchElementException::new));
   }
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Ingredient> search(RequestParam(){
-    return ingredientRepository.getAllByNameContainingOrderByNameAsc();
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter) {
+    return ingredientRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
-//  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter){
-//    return ingredientRepository.getAllByNameContainingOrderByNameAsc(filter);
+  // TODO verify if this is OK
+  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public String getAmount(@PathVariable long id) {
+    Ingredient existingIngredient = get(id);
+    return existingIngredient.getQuantity();
+  }
+
+  // TODO Determine if this belongs in the ListItem or Meal class instead
+//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Iterable<Meal> getIngredients(@PathVariable long id) {
+//    return mealRepository.findById(id)
+//        .map(ingredientRepository::)
 //  }
 
-  @PostMapping(
-      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Ingredient> postIngredientName(@RequestBody Ingredient ingredient) {
-    if (ingredient.getName() != null && ingredient.getId() != null){
-      ingredient.setName(mealRepository;
+
+  @PutMapping(value = "/{id:\\d+}",
+  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Ingredient putQuantity(@PathVariable long id, @RequestBody Ingredient ingredient) {
+    Ingredient existingIngredient = get(id);
+    if (ingredient.getQuantity() != null && ingredient.getId() != null){
+      existingIngredient.setQuantity(ingredient.getQuantity());
     }
-    return ResponseEntity.created(ingredient.getHref()).body(ingredient);
+    return ingredientRepository.save(ingredient);
   }
-
-
-//  @PutMapping(value = "/id:\\d+}/listItem",
-//  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Ingredient putListItem(@PathVariable long id, @RequestBody ListItem listItem) {
-//    Ingredient ingredient = get(id);
-//    if (listItem != null && ingredient.getId() != null){
-//      listItem = listRepository.findById(listItem.getId()).orElseThrow((NoSuchElementException::new));
-//    }
-//    ingredient.setListItem(listItem);
-//    return ingredientRepository.save(ingredient);
-//  }
 
 }

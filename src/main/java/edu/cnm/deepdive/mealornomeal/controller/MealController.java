@@ -42,20 +42,38 @@ public class MealController {
     this.userRepository = userRepository;
   }
 
+  /**
+   *
+   * @param id
+   * @return
+   */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal get(@PathVariable long id) {
     return mealRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   *
+   * @return
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Meal> getMeals() {return mealRepository.getAllByOrderByCreator_IdAsc();}
 
-
+  /**
+   *
+   * @param filter
+   * @return
+   */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Meal> search(@RequestParam(name = "q", required = true) String filter) {
     return mealRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
+  /**
+   *
+   * @param meal
+   * @return
+   */
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Meal> postCreator(@RequestBody Meal meal) {
@@ -67,7 +85,12 @@ public class MealController {
     return ResponseEntity.created(meal.getHref()).body(meal);
   }
 
-
+  /**
+   *
+   * @param id
+   * @param meal
+   * @return
+   */
   @PutMapping(value = "/{id:\\d+}",
   consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal putName(@PathVariable long id, @RequestBody Meal meal) {
@@ -78,6 +101,12 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  /**
+   *
+   * @param id
+   * @param meal
+   * @return
+   */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal putInstruction(@PathVariable long id, @RequestBody Meal meal) {
@@ -88,6 +117,12 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  /**
+   *
+   * @param id
+   * @param meal
+   * @return
+   */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal putPrepTime(@PathVariable long id, @RequestBody Meal meal) {
@@ -98,6 +133,12 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  /**
+   *
+   * @param id
+   * @param meal
+   * @return
+   */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal putRequirements(@PathVariable long id, @RequestBody Meal meal) {
@@ -108,6 +149,10 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  /**
+   *
+   * @param id
+   */
   // TODO set Calendar meal slots containing deleted meal to null
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

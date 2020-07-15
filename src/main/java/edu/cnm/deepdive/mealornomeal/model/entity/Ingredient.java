@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
+import edu.cnm.deepdive.mealornomeal.controller.view.FlatIngredient;
+import java.net.URI;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,7 @@ import javax.persistence.OneToMany;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-public class Ingredient {
+public class Ingredient implements FlatIngredient {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +41,16 @@ public class Ingredient {
 
   public Long getId() {
     return id;
+  }
+
+  @Override
+  public String getIngredient() {
+    return null;
+  }
+
+  @Override
+  public URI getHref() {
+    return null;
   }
 
   public String getName() {

@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
+import edu.cnm.deepdive.mealornomeal.controller.view.FlatListItem;
+import java.net.URI;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-public class ListItem {
+public class ListItem implements FlatListItem {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +40,16 @@ public class ListItem {
 
   public Long getId() {
     return id;
+  }
+
+  @Override
+  public String getListItem() {
+    return null;
+  }
+
+  @Override
+  public URI getHref() {
+    return null;
   }
 
   public String getName() {

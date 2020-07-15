@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
+import edu.cnm.deepdive.mealornomeal.model.entity.Calendar;
 import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
 import edu.cnm.deepdive.mealornomeal.model.entity.User;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
@@ -43,7 +44,7 @@ public class MealController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Meal> get() {return mealRepository.getAllByOrderByCreator_IdAsc();}
+  public Iterable<Meal> getMeals() {return mealRepository.getAllByOrderByCreator_IdAsc();}
 
 
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,21 +104,11 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  // TODO set Calendar meal slots containing deleted meal to null
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) {
-    mealRepository.findById(id)
-        .map((meal) -> {
-          Meal  = meal.getCreator();
-          User.forEach((quote) -> quote.setSource(null));
-          quoteRepository.saveAll(quotes);
-          return source;
-        })
-        .map((source) -> {
-          sourceRepository.delete(source);
-          return source;
-        })
-        .orElseThrow(NoSuchElementException::new);
+    mealRepository.delete(get(id));
   }
 
-}
+  }

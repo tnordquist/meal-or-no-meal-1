@@ -35,9 +35,9 @@ public class IngredientController {
     this.listRepository = listRepository;
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Ingredient> get() {
-    return ingredientRepository.getAllByNameContainingOrderByNameAsc();}
+//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Iterable<Ingredient> get() {
+//    return ingredientRepository.getAllByNameContainingOrderByNameAsc();}
 
 //  @PostMapping(
 //      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,15 +54,15 @@ public class IngredientController {
     return ingredientRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
-  @PutMapping(value = "/id:\\d+}/listItem",
-  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient putListItem(@PathVariable long id, @RequestBody ListItem listItem) {
-    Ingredient ingredient = get(id);
-    if (listItem != null && ingredient.getId() != null){
-      listItem = listRepository.findById(listItem.getId()).orElseThrow((NoSuchElementException::new));
-    }
-    ingredient.setListItem(listItem);
-    return ingredientRepository.save(ingredient);
-  }
+//  @PutMapping(value = "/id:\\d+}/listItem",
+//  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Ingredient putListItem(@PathVariable long id, @RequestBody ListItem listItem) {
+//    Ingredient ingredient = get(id);
+//    if (listItem != null && ingredient.getId() != null){
+//      listItem = listRepository.findById(listItem.getId()).orElseThrow((NoSuchElementException::new));
+//    }
+//    ingredient.setListItem(listItem);
+//    return ingredientRepository.save(ingredient);
+//  }
 
 }

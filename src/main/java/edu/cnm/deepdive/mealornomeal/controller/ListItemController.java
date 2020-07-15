@@ -21,7 +21,7 @@ public class ListItemController {
 
   private final IngredientRepository ingredientRepository;
   private final ListRepository listRepository;
-  private final MealRepository mealRepository;
+//  private final MealRepository mealRepository;
 
   @Autowired
   public ListItemController(
@@ -30,9 +30,9 @@ public class ListItemController {
     this.listRepository = listRepository;
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<ListItem> get () {return listRepository.getAllByNameContainingOrderByNameAsc();
-  }
+//  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Iterable<ListItem> get () {return listRepository.getAllByNameContainingOrderByNameAsc();
+//  }
 
   @GetMapping(value = "/{list_item_id://d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ListItem get(@PathVariable long list_item_id) {
@@ -40,12 +40,12 @@ public class ListItemController {
         .orElseThrow(NoSuchElementException::new);
   }
 
-  @GetMapping(value = "/{list_item_id://d+}/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Meal> getMeals(@PathVariable long list_item_id){
-  return listRepository.findById(list_item_id)
-    .map(ingredientRepository::getAllByNameContainingOrderByNameAsc)
-      .orElseThrow(NoSuchElementException::new);
-  }
+//  @GetMapping(value = "/{list_item_id://d+}/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Iterable<Meal> getMeals(@PathVariable long list_item_id){
+//  return listRepository.findById(list_item_id)
+//    .map(ingredientRepository::getAllByNameContainingOrderByNameAsc)
+//      .orElseThrow(NoSuchElementException::new);
+//  }
 }
 
 

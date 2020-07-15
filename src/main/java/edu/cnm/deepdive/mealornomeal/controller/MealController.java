@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MealController {
 
   private final MealRepository mealRepository;
-  private final UserRepository userRepository;
+ // private final UserRepository userRepository;
 
   @Autowired
   public MealController(MealRepository mealRepository) {
@@ -45,18 +45,18 @@ public class MealController {
 
   // TODO Add authentication piece
   // TODO Set creator to current user
-  @PostMapping(
-      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Meal> post(@RequestBody Meal meal) {
-    if (meal.getCreator() != null && meal.getCreator().getId() != null) {
-      meal.setCreator(
-          userRepository.findById(
-              meal.getCreator().getId()
-          ).orElseThrow(NoSuchElementException::new)
-      );
-    }
-    return ResponseEntity.created(meal.getHref())
-  }
+//  @PostMapping(
+//      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<Meal> post(@RequestBody Meal meal) {
+//    if (meal.getCreator() != null && meal.getCreator().getId() != null) {
+//      meal.setCreator(
+//          userRepository.findById(
+//              meal.getCreator().getId()
+//          ).orElseThrow(NoSuchElementException::new)
+//      );
+//    }
+//    return ResponseEntity.created(meal.getHref())
+//  }
 
   @PutMapping(value = "/{id:\\d+}",
   consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

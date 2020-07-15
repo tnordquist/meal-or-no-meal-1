@@ -47,7 +47,7 @@ public class CalendarController{
           ).orElseThrow(NoSuchElementException::new)
       );
     }
-    return ResponseEntity.created(calendar.getHref()).body(calendar);
+    return ResponseEntity.created(calendar.getHref());
   }
 
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,14 +59,13 @@ public class CalendarController{
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Calendar put(@PathVariable long id, @RequestBody Calendar calendar) {
     Calendar existingCalendar = get(id);
-    if (calendar.getName() != null) {
-      existingCalendar.setName(calendar.getName());
+    if (calendar.getId() != null) {
+      existingCalendar.setId(calendar.getId());
     }
     return calendarRepository.save(existingCalendar);
   }
 
   @DeleteMapping(value = "/{id:\\d+}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) {
 
   }

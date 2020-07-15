@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,11 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/quotes")
+@RequestMapping("/calendar")
 @ExposesResourceFor(Calendar.class)
 public class CalendarController{
 
@@ -47,7 +45,7 @@ public class CalendarController{
           ).orElseThrow(NoSuchElementException::new)
       );
     }
-    return ResponseEntity.created(calendar.getHref()).body(calendar);
+    return ResponseEntity.created(calendar.getHref());
   }
 
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,17 +57,10 @@ public class CalendarController{
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Calendar put(@PathVariable long id, @RequestBody Calendar calendar) {
     Calendar existingCalendar = get(id);
-    if (calendar.getName() != null) {
-      existingCalendar.setName(calendar.getName());
+    if (calendar.getId() != null) {
+      existingCalendar.setId(calendar.getId());
     }
     return calendarRepository.save(existingCalendar);
   }
-
-  @DeleteMapping(value = "/{id:\\d+}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
-
-  }
-
 
 }

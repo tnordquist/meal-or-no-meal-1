@@ -1,12 +1,8 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
-import edu.cnm.deepdive.mealornomeal.model.entity.User;
-import edu.cnm.deepdive.mealornomeal.model.service.CalendarRepository;
-import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
-import java.security.Principal;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;

@@ -1,15 +1,13 @@
 package edu.cnm.deepdive.mealornomeal.controller;
-
 import edu.cnm.deepdive.mealornomeal.model.entity.Calendar;
 import edu.cnm.deepdive.mealornomeal.model.service.CalendarRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
 import java.util.NoSuchElementException;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +43,8 @@ public class CalendarController{
           ).orElseThrow(NoSuchElementException::new)
       );
     }
-    return ResponseEntity.created(calendar.getHref());
+    calendarRepository.save(calendar);
+    return ResponseEntity.created(calendar.getHref()).body(calendar);
   }
 
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)

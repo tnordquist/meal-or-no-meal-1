@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.cnm.deepdive.mealornomeal.controller.view.FlatUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 
   @SuppressWarnings("JpaDataSourceORMInspection")
   @Entity
-  public class User {
+  public class User implements FlatUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -6,6 +6,7 @@ import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,25 +28,26 @@ public class MealController {
   private final UserRepository userRepository;
 
   @Autowired
-  public MealController(MealRepository mealRepository) {
+  public MealController(MealRepository mealRepository,
+      UserRepository userRepository) {
     this.mealRepository = mealRepository;
+    this.userRepository = userRepository;
   }
-
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Meal> get() {return mealRepository.getAllByOrderByCreator_IdAsc();}
 
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal get(@PathVariable long id) {
     return mealRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Meal> get() {return mealRepository.getAllByOrderByCreator_IdAsc();}
+
+
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Meal> search(@RequestParam(name = "q", required = true) String filter) {
     return mealRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
-  // TODO Add authentication piece
-  // TODO Set creator to current user
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Meal> post(@RequestBody Meal meal) {
@@ -56,9 +59,10 @@ public class MealController {
     return ResponseEntity.created(meal.getHref()).body(meal);
   }
 
+
   @PutMapping(value = "/{id:\\d+}",
   consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal put(@PathVariable long id, @RequestBody Meal meal) {
+  public Meal putName(@PathVariable long id, @RequestBody Meal meal) {
     Meal existingMeal = get(id);
     if (meal.getName() != null) {
       existingMeal.setName(meal.getName());
@@ -66,6 +70,34 @@ public class MealController {
     return mealRepository.save(existingMeal);
   }
 
+  @PutMapping(value = "/{id:\\d+}",
+      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Meal putInstruction(@PathVariable long id, @RequestBody Meal meal) {
+    Meal existingMeal = get(id);
+    if (meal.getInstruction() != null) {
+      existingMeal.setInstruction(meal.getInstruction());
+    }
+    return mealRepository.save(existingMeal);
+  }
 
+  @PutMapping(value = "/{id:\\d+}",
+      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Meal putPrepTime(@PathVariable long id, @RequestBody Meal meal) {
+    Meal existingMeal = get(id);
+    if (meal.getPrepTime() != null) {
+      existingMeal.setPrepTime(meal.getPrepTime());
+    }
+    return mealRepository.save(existingMeal);
+  }
+
+  @PutMapping(value = "/{id:\\d+}",
+      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Meal putRequirements(@PathVariable long id, @RequestBody Meal meal) {
+    Meal existingMeal = get(id);
+    if (meal.getRequirements() != null) {
+      existingMeal.setRequirements(meal.getRequirements());
+    }
+    return mealRepository.save(existingMeal);
+  }
 
 }

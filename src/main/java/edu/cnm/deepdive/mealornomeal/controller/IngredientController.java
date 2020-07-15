@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(Ingredient.class)
 public class IngredientController {
 
+  /**
+  * Ingredient Controller utilizes the Ingredient repository to load ingredients for meal entities.
+   *
 
+   */
   private final IngredientRepository ingredientRepository;
   private final MealRepository mealRepository;
   private final ListRepository listRepository;

@@ -38,8 +38,6 @@ public class CalendarController{
   }
 
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Calendar> get() {return calendarRepository.getAllByCreator_IdOrderByTextAsc();}
 
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Calendar get(@PathVariable long id) {
@@ -48,7 +46,7 @@ public class CalendarController{
 
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Calendar> searchByName(@RequestParam(name = "q", required = true) String filter) {
-    return calendarRepository.getAllByName(filter);
+    return calendarRepository.getAllByNameOrderByDateAsc(filter);
   }
 
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)

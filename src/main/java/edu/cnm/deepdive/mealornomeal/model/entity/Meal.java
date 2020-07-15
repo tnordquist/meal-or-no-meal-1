@@ -3,6 +3,7 @@ package edu.cnm.deepdive.mealornomeal.model.entity;
 import edu.cnm.deepdive.mealornomeal.controller.view.FlatMeal;
 import java.net.URI;
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,7 +47,8 @@ public class Meal implements FlatMeal {
   @Column(name = "requirements", length = 200)
   private String required;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER,
+  cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "creator_id")
   private User creator;
 

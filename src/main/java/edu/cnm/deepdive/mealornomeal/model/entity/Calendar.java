@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
         @Index(columnList = "name")
     }
 )
-public class Calendar implements FlatCalendar {
+public abstract class Calendar implements FlatCalendar {
 
   private static EntityLinks entityLinks;
 
@@ -50,16 +50,12 @@ public class Calendar implements FlatCalendar {
   private LocalDate date;
 
   @Column(nullable = false)
-  private int mealSlot;
+  private String mealSlot;
 
   public Long getId() {
     return id;
   }
 
-  @Override
-  public String getName() {
-    return null;
-  }
 
   public Meal getMeal() {
     return meal;
@@ -85,11 +81,11 @@ public class Calendar implements FlatCalendar {
     this.date = date;
   }
 
-  public int getMealSlot() {
+  public String getMealSlot() {
     return mealSlot;
   }
 
-  public void setMealSlot(int mealSlot) {
+  public void setMealSlot(String mealSlot) {
     this.mealSlot = mealSlot;
   }
 

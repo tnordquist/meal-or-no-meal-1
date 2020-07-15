@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-import edu.cnm.deepdive.mealornomeal.controller.view.FlatCalendar;
+import edu.cnm.deepdive.mealornomeal.view.FlatCalendar;
 import java.net.URI;
 import java.time.LocalDate;
 import javax.annotation.PostConstruct;

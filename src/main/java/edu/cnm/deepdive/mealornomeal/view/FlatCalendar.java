@@ -1,19 +1,18 @@
-package edu.cnm.deepdive.mealornomeal.controller.view;
+package edu.cnm.deepdive.mealornomeal.view;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.net.URI;
 import org.springframework.lang.NonNull;
 
+public interface FlatCalendar {
 
-  @JsonPropertyOrder(value = {"id", "name", "quantity", "href"})
-  public interface FlatListItem {
+  @JsonPropertyOrder(value = {"id", "name", "href"})
 
     Long getId();
 
     @NonNull
-    String getListItem();
+    String getName();
 
     URI getHref();
 
   }
-

@@ -6,8 +6,8 @@ import edu.cnm.deepdive.mealornomeal.model.service.CalendarRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
-import java.awt.PageAttributes.MediaType;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,12 +27,12 @@ public class UserController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<User> get() {
-    return userRepository.getAllByNameContainingOrderByNameAsc();
+  public Iterable<User> getAll() {
+    return userRepository.getAllByOrdOrderByNameAsc();
   }
 
   @GetMapping(value ="/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public User get(@PathVariable long id ) {
+  public User get(@PathVariable long id ) throws NoSuchFieldException {
     return userRepository.findById(id).orElseThrow(NoSuchFieldException::new);
   }
 

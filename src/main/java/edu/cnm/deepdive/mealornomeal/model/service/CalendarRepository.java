@@ -26,6 +26,6 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long> {
    * @return
    */
   @Query
-  Iterable<Calendar> getAllByDateOrderByDateAsc(long id);
+  Iterable<Calendar> getAllByDate(long id);
 
 }

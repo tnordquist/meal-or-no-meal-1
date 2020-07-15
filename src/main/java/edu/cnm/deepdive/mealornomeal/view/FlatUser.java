@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.mealornomeal.controller.view;
+package edu.cnm.deepdive.mealornomeal.view;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.lang.NonNull;
@@ -7,8 +7,7 @@ import org.springframework.lang.NonNull;
 public interface FlatUser {
 
   Long getId();
-
-  @NonNull
+  
   String getName();
 
   String getOauthKey();

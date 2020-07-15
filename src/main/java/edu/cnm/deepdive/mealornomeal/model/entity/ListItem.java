@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-import edu.cnm.deepdive.mealornomeal.controller.view.FlatListItem;
+import edu.cnm.deepdive.mealornomeal.view.FlatListItem;
 import java.net.URI;
 import javax.persistence.Column;
 import javax.persistence.Entity;

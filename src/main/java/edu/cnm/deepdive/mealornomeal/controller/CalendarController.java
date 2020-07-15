@@ -79,10 +79,10 @@ public class CalendarController {
    * @return calendarRepository
    */
 
-  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Calendar> searchByDate(@RequestParam(name = "q", required = true) long filter) {
-    return calendarRepository.getAllByDateOrderByDateAsc(filter);
-  }
+//  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Iterable<Calendar> searchByDate(@RequestParam(name = "q", required = true) long filter) {
+//    return calendarRepository.getAllByDate(filter);
+//  }
 
 
   /**

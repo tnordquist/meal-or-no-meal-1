@@ -1,7 +1,7 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.cnm.deepdive.mealornomeal.controller.view.FlatUser;
+import edu.cnm.deepdive.mealornomeal.view.FlatUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRepository extends JpaRepository<User,Long> {
 
   @Query
-  Iterable<User> getAllByNameContainingOrderByNameAsc(Long id);
+  Iterable<User> getAllByOrdOrderByNameAsc();
 
   Optional<User> findFirstByOauthKey(String oauthKey);
 }

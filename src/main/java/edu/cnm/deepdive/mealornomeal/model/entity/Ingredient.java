@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-import edu.cnm.deepdive.mealornomeal.controller.view.FlatIngredient;
+import edu.cnm.deepdive.mealornomeal.view.FlatIngredient;
 import java.net.URI;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -30,7 +29,7 @@ public class Ingredient implements FlatIngredient {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "meal_id")
-  private Meal meal_id;
+  private Meal mealId;
 
   public void setName(String name) {
     this.name = name;
@@ -43,6 +42,7 @@ public class Ingredient implements FlatIngredient {
   public Long getId() {
     return id;
   }
+
 
   @Override
   public URI getHref() {
@@ -58,4 +58,7 @@ public class Ingredient implements FlatIngredient {
     return quantity;
   }
 
+  public Meal getMealId() {
+    return mealId;
+  }
 }

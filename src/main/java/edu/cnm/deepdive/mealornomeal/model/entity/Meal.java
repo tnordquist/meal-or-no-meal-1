@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.model.entity;
 
-import edu.cnm.deepdive.mealornomeal.controller.view.FlatMeal;
+import edu.cnm.deepdive.mealornomeal.view.FlatMeal;
 import java.net.URI;
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;

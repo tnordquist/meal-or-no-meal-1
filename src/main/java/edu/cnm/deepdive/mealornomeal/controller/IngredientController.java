@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Ingredient Controller utilize the Ingredient repository to load ingredients for meal entities.
+ *
+ */
+
 @RestController
 @RequestMapping("/ingredients")
 @ExposesResourceFor(Ingredient.class)

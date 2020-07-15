@@ -18,6 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is th Entity model for Meal representing
+ */
+
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Component
@@ -52,9 +56,19 @@ public class Meal implements FlatMeal {
   @JoinColumn(name = "creator_id")
   private User creator;
 
+  /**
+   * Gets Id
+   *
+   */
+
   public Long getId() {
     return id;
   }
+
+  /**
+   * Gets Name
+   *
+   */
 
   public String getName() {
     return name;
@@ -64,6 +78,11 @@ public class Meal implements FlatMeal {
     this.name = name;
   }
 
+  /**
+   * Gets Instructions
+   *
+   */
+
   public String getInstruction() {
     return instruction;
   }
@@ -71,6 +90,11 @@ public class Meal implements FlatMeal {
   public void setInstruction(String instruction) {
     this.instruction = instruction;
   }
+
+  /**
+   * Gets PreTime
+   *
+   */
 
   public Integer getPrepTime() {
     return prepTime;
@@ -80,6 +104,11 @@ public class Meal implements FlatMeal {
     this.prepTime = prepTime;
   }
 
+  /**
+   * Gets Requirements
+   *
+   */
+
   public String getRequirements() {
     return required;
   }
@@ -87,6 +116,8 @@ public class Meal implements FlatMeal {
   public void setRequirements(String requirements) {
     this.required = requirements;
   }
+
+
 
   public User getCreator() {
     return creator;

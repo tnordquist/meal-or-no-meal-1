@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This controls the meal post users are able to
+ */
+
 @RestController
 @RequestMapping("/meals")
 @ExposesResourceFor(Meal.class)

@@ -1,15 +1,17 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
+
 import edu.cnm.deepdive.mealornomeal.model.entity.User;
-import edu.cnm.deepdive.mealornomeal.model.service.UserService;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.cnm.deepdive.mealornomeal.model.service.CalendarRepository;
+import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
+import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
+import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
+import java.awt.PageAttributes.MediaType;
 import org.springframework.hateoas.server.ExposesResourceFor;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,18 +20,40 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(User.class)
 public class UserController {
 
-  private final UserService userService;
+  private final UserRepository userRepository;
+  private final MealRepository mealRepository;
+  private final ListRepository listRepository;
+  private final CalendarRepository calendarRepository;
 
-@Autowired
-  public UserController(UserService userService) {this.userService = userService;}
-  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> get(@PathVariable long id) {
-  return ResponseEntity.of(userService.get(id));
+  public UserController(UserRepository userRepository, MealRepository mealRepository, ListRepository listRepository, CalendarRepository calendarRepository) {
+    this.userRepository = userRepository;
+        this.mealRepository = mealRepository;
+        this.listRepository = listRepository;
+        this.calendarRepository = calendarRepository;
   }
 
-  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> get(Authentication auth) {
-  User user = (auth != null) ? (User) auth.getPrincipal() : null;
-    return ResponseEntity.of(Optional.ofNullable(user));
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<User> get() {
+    return userRepository.getAllByNameContainingOrderByNameAsc();
   }
+
+  @GetMapping(value ="/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public User get(@PathVariable long id ) {
+    return userRepository.findById(id).orElseThrow(NoSuchFieldException::new);
+  }
+
+  @PutMapping(value = "{id:\\d+}",
+      consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public User put(@PathVariable long id, @RequestBody User user) {
+    User existingUser = get(id);
+    if (user.getName() != null) {
+      existingUser.setName(user.getName());
+    }
+    if (user. != 0) {
+      existingUser.setSkillLevel(user.getSkillLevel());
+    }
+    return userRepository.save(existingUser);
+
+
 }
+

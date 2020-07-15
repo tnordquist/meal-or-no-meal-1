@@ -9,12 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
+/**
+ * The user interface holds the information of the user.
+ */
 
   @SuppressWarnings("JpaDataSourceORMInspection")
   @Entity
   public class User implements FlatUser {
 
-    @Id
+  /**
+   * Implementing this interface allows
+   */
+
+  @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", updatable = false, nullable = false)
     private Long id;

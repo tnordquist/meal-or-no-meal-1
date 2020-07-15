@@ -1,8 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.Ingredient;
-import edu.cnm.deepdive.mealornomeal.model.entity.ListItem;
-import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
 import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
@@ -12,8 +10,6 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ingredients")
 @ExposesResourceFor(Ingredient.class)
 public class IngredientController {
+
 
   private final IngredientRepository ingredientRepository;
   private final MealRepository mealRepository;

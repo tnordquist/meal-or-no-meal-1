@@ -5,17 +5,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * The user service is a service to connect to goole with the user account.
+ */
 @Service
 public class UserService {
 
   private final UserRepository userRepository;
 
   /**
-   *
-   * @param userRepository
+  * the  AutoWired annotation removes the properties element in the XML.
+    * Takes an entityLinks parameter.
+   * @param
    */
-
 
   @Autowired
   public UserService(UserRepository userRepository) {
@@ -23,7 +25,7 @@ public class UserService {
   }
 
 //  public synchronized User readOrCreateOne(String oauthKey, String name) {
-//    return userRepository.findFirstByOauthkey(oauthKey)
+//    return userRepository.findFirstByOauthKey(oauthKey)
 //        .orElseGet(() -> {
 //          User user = new User();
 //          user.setOauthKey(oauthKey);
@@ -32,6 +34,11 @@ public class UserService {
 //        });
 //  }
 
+  /**
+   * gets the long id and returns the user Repository by the Id.
+   * @param id
+   * @return
+   */
   public Optional<User> get(Long id) {
     return userRepository.findById(id);
   }

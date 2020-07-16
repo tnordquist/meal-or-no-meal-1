@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * The User service is the service to log in with google.
  */
 
 
@@ -25,12 +25,23 @@ public class UserServiceController {
 
   private final UserService userService;
 
+  /**
+   *This Method with the @AutoWired annotation removes the properties element in the XML.
+   * @param userService
+   */
+
   @Autowired
   public UserServiceController(UserService userService) {this.userService = userService;}
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> get(@PathVariable long id) {
     return ResponseEntity.of(userService.get(id));
   }
+
+  /**
+   * GetMapping
+   * @param auth
+   * @return
+   */
 
   @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> get(Authentication auth) {

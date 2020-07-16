@@ -18,7 +18,7 @@ import javax.persistence.Id;
   public class User implements FlatUser {
 
   /**
-   * Implementing this interface allows
+   * Implementing this interface allows the User creat an user Id.
    */
 
   @Id
@@ -26,32 +26,57 @@ import javax.persistence.Id;
     @Column(name = "user_id", updatable = false, nullable = false)
     private Long id;
 
+  /**
+   * This allow the User to creat a unique user name.
+   */
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @JsonIgnore
+  @JsonIgnore
     @Column(nullable = false, updatable = false, unique = true)
     private String oauthKey;
 
-
-    public Long getId() {
+  /**
+   * gets the user id
+   * @return
+   */
+  public Long getId() {
       return id;
     }
 
-    public String getName() {
+  /**
+   * gets the name of the user
+   * @return
+   */
+  public String getName() {
       return name;
     }
 
-    public void setName(String name) {
+  /**
+   * Sets the user name
+   * @param name
+   */
+
+  public void setName(String name) {
       this.name = name;
     }
 
-    public String getOauthKey() {
+  /**
+   * gets the oauthKey from google
+   * @return
+   */
+
+  public String getOauthKey() {
       return oauthKey;
     }
 
-    public void setOauthKey(String oauthKey) {
+  /**
+   *  Sets the oauthKey for the user.
+   * @param oauthKey
+   */
+
+  public void setOauthKey(String oauthKey) {
       this.oauthKey = oauthKey;
     }
 

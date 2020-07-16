@@ -76,38 +76,80 @@ public abstract class Calendar implements FlatCalendar {
   private String mealSlot;
 
 
-
+  /**
+   * This Getter gets the id of the calendar.
+   */
   public Long getId() {
     return id;
   }
+
+  /**
+   * This Getter gets the meal requested.
+   */
   public Meal getMeal() {
     return meal;
   }
+
+  /**
+   *This Setter sets the meal you've requested.
+   */
   public void setMeal(Meal meal) {
     this.meal = meal;
   }
+
+  /**
+   *This Getter gets the creator of the calendar.
+   */
   public User getCreator() {
     return creator;
   }
+
+  /**
+   *This Setter sets the Creator you've requested.
+   */
   public void setCreator(User creator) {
     this.creator = creator;
   }
+
+  /**
+   * This Getter gets the Date of the calendar.
+   */
   public LocalDate getDate() {
     return date;
   }
+
+  /**
+   *This Setter sets the date that has been requested.
+   */
   public void setDate(LocalDate date) {
     this.date = date;
   }
+
+  /**
+   *This Getter gets the current status of a selected meal slot.
+   */
   public String getMealSlot() {
     return mealSlot;
   }
+
+  /**
+   * This Setter sets the current status of the meal slot.
+   */
   public void setMealSlot(String mealSlot) {
     this.mealSlot = mealSlot;
   }
+
+  /**
+   *This Setter sets the id of the current calendar.
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * This Method with the @AutoWired annotation removes the properties element in the XML.
+   * @param entityLinks
+   */
   @Autowired
   public static void setEntityLinks(EntityLinks entityLinks) {
     Calendar.entityLinks = entityLinks;
@@ -118,6 +160,9 @@ public abstract class Calendar implements FlatCalendar {
     return (id != null) ? entityLinks.linkForItemResource(Calendar.class, id).toUri() : null;
   }
 
+  /**
+   * The PostConstruct annotation is used on the method that needs to be executed after dependency injection
+   */
   @PostConstruct
   private void initHateoas() {
     //noinspection ResultOfMethodCallIgnored

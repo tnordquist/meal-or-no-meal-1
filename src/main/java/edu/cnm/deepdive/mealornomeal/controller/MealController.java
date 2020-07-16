@@ -38,8 +38,8 @@ public class MealController {
 
   /**
    * A consturctor that creates contextualized instances of the Meal and User repositories.
-   * @param mealRepository
-   * @param userRepository
+   * @param - Takes a mealRepository parameter
+   * @param - Takes a userRepository parameter
    */
   @Autowired
   public MealController(MealRepository mealRepository,
@@ -52,7 +52,7 @@ public class MealController {
    * Allows the user to get a specific Meal entity with a specific ID.
    * @param id - the Meal's Primary Key and identifier
    * @return - returns the Meal with the specified ID
-   * @throws - Throws a NoSuchElementException if there is no existing Meal with the provided ID
+   * @throws - throws a NoSuchElementException if there is no existing Meal with the provided ID
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Meal get(@PathVariable long id) {

@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The ListItemController controls the details of a ListItem that
+ * populates the shopping list.
+ */
 @RestController
 @RequestMapping("list_items")
 @ExposesResourceFor(ListItem.class)
@@ -28,6 +32,14 @@ public class ListItemController {
 
   private final ListRepository listRepository;
   private final UserRepository userRepository;
+
+  /**
+   * a constructor that creates a contextualized instances or list and user
+   * repositories.
+   * @param ingredientRepository - Takes an ingredientRepository paramenter
+   * @param listRepository - Takes a listRepository parameter
+   * @param userRepository - Takes userRepository parameter
+   */
 
   @Autowired
   public ListItemController(
@@ -37,23 +49,44 @@ public class ListItemController {
     this.userRepository = userRepository;
   }
 
+  /**
+   * Finds a ListItem based on the Primary Key
+   * @param id - The ListItem's Primary Key
+   * @return - Returns the List Item
+   */
   @GetMapping(value = "/{id://d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ListItem get(@PathVariable long id) {
     return listRepository.findById(id)
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * Allows for a Search of ListItem by name and returns ListItems in Ascending Order by Name
+   * @param filter a String provided by the User
+   * @return filtered ListItems by Name
+   */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<ListItem> search(@RequestParam(name = "q", required = true) String filter) {
     return listRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
+  /**
+   * Returns the Quantity of the Ingredient entity based on Id query.
+   * @param id - Id associated with the ingredient
+   * @return - Returns the current ListItem entity with the newly updated Quantity
+   */
   @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public String getAmount(@PathVariable long id) {
     ListItem existingListItem = get(id);
     return existingListItem.getQuantity();
   }
 
+  /**
+   * Returns the Quantity of the ListItem entity based on Id input.
+   * @param id - Id associated with the ListItem
+   * @param listItem - Id associated with the ListItem
+   * @return Quantity of the ListItem searched
+   */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ListItem putQuantity(@PathVariable long id, @RequestBody ListItem listItem) {
@@ -64,6 +97,11 @@ public class ListItemController {
     return listRepository.save(listItem);
   }
 
+  /**
+   * Allows the user to POST a ListItem entity which includes Name and Quantity.
+   * @param listItem - The body of the ListItem entity
+   * @return - The just created ListItem
+   */
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ListItem> postName(@RequestBody ListItem listItem) {
@@ -74,7 +112,10 @@ public class ListItemController {
     }
     return ResponseEntity.created(listItem.getHref()).body(listItem);
   }
-
+  /**
+   * Allows the user to delete a ListItem they have created
+   * @param id - ID associated with the specific ListItem they would like to delete
+   */
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) {

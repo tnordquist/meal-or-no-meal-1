@@ -110,7 +110,7 @@ public class CalendarController {
    * @param calendar
    * @return
    */
-
+ //TODO test
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Calendar put(@PathVariable long id, @RequestBody Calendar calendar) {

@@ -54,7 +54,7 @@ public class ListItemController {
    * @param id - The ListItem's Primary Key
    * @return - Returns the List Item
    */
-  @GetMapping(value = "/{id://d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ListItem get(@PathVariable long id) {
     return listRepository.findById(id)
         .orElseThrow(NoSuchElementException::new);
@@ -75,11 +75,12 @@ public class ListItemController {
    * @param id - Id associated with the ingredient
    * @return - Returns the current ListItem entity with the newly updated Quantity
    */
-  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public String getAmount(@PathVariable long id) {
-    ListItem existingListItem = get(id);
-    return existingListItem.getQuantity();
-  }
+  //TODO repetitive.
+//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public String getAmount(@PathVariable long id) {
+//    ListItem existingListItem = get(id);
+//    return existingListItem.getQuantity();
+//  }
 
   /**
    * Returns the Quantity of the ListItem entity based on Id input.

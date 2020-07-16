@@ -98,15 +98,16 @@ public class MealController {
    * @param meal - The body of the Meal entity containing the Name attribute the user is editing
    * @return - Returns the current Meal entity with the newly updated Name
    */
-  @PutMapping(value = "/{id:\\d+}",
-  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putName(@PathVariable long id, @RequestBody Meal meal) {
-    Meal existingMeal = get(id);
-    if (meal.getName() != null) {
-      existingMeal.setName(meal.getName());
-    }
-    return mealRepository.save(existingMeal);
-  }
+  //TODO This was a redudant method.
+//  @PutMapping(value = "/{id:\\d+}",
+//  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Meal putName(@PathVariable long id, @RequestBody Meal meal) {
+//    Meal existingMeal = get(id);
+//    if (meal.getName() != null) {
+//      existingMeal.setName(meal.getName());
+//    }
+//    return mealRepository.save(existingMeal);
+//  }
 
   /**
    * Allows the user to edit the instruction of a meal they have created.
@@ -130,15 +131,16 @@ public class MealController {
    * @param meal - The body of the Meal entity containing the PrepTime attribute the user is editing
    * @return - Returns the current Meal entity with the newly updated PrepTime
    */
-  @PutMapping(value = "/{id:\\d+}",
-      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putPrepTime(@PathVariable long id, @RequestBody Meal meal) {
-    Meal existingMeal = get(id);
-    if (meal.getPrepTime() != null) {
-      existingMeal.setPrepTime(meal.getPrepTime());
-    }
-    return mealRepository.save(existingMeal);
-  }
+  //TODO redundant method.
+//  @PutMapping(value = "/{id:\\d+}",
+//      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Meal putPrepTime(@PathVariable long id, @RequestBody Meal meal) {
+//    Meal existingMeal = get(id);
+//    if (meal.getPrepTime() != null) {
+//      existingMeal.setPrepTime(meal.getPrepTime());
+//    }
+//    return mealRepository.save(existingMeal);
+//  }
 
   /**
    * Allows the user to edit the requirement of a meal they have created.
@@ -146,15 +148,16 @@ public class MealController {
    * @param meal - The body of the Meal entity containing the Requirement attribute the user is editing
    * @return - Returns the current Meal entity with the newly updated Requirement
    */
-  @PutMapping(value = "/{id:\\d+}",
-      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putRequirements(@PathVariable long id, @RequestBody Meal meal) {
-    Meal existingMeal = get(id);
-    if (meal.getRequirements() != null) {
-      existingMeal.setRequirements(meal.getRequirements());
-    }
-    return mealRepository.save(existingMeal);
-  }
+  //TODO redundant method.
+//  @PutMapping(value = "/{id:\\d+}",
+//      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Meal putRequirements(@PathVariable long id, @RequestBody Meal meal) {
+//    Meal existingMeal = get(id);
+//    if (meal.getRequirements() != null) {
+//      existingMeal.setRequirements(meal.getRequirements());
+//    }
+//    return mealRepository.save(existingMeal);
+//  }
 
   /**
    * Allows the user to delete a Meal they have created

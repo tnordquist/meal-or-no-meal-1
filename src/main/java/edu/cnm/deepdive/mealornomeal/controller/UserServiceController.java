@@ -32,10 +32,10 @@ public class UserServiceController {
 
   @Autowired
   public UserServiceController(UserService userService) {this.userService = userService;}
-  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> get(@PathVariable long id) {
-    return ResponseEntity.of(userService.get(id));
-  }
+//  @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<User> get(@PathVariable long id) {
+//    return ResponseEntity.of(userService.get(id));
+//  }
 
   /**
    * GetMapping

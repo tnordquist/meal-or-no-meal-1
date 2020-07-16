@@ -18,6 +18,6 @@ public interface IngredientRepository extends JpaRepository <Ingredient, Long> {
    * @return String of Ingredients by Name
    */
   @Query
-  Iterable<Ingredient> getAllByNameContainingOrderByNameAsc(String name);
+  Iterable<Ingredient> getAllByNameOrderByNameAsc(String name);
 
 }

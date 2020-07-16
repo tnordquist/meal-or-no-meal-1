@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
 import edu.cnm.deepdive.mealornomeal.model.entity.Ingredient;
-import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
 import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
@@ -9,11 +8,8 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +55,7 @@ public class IngredientController {
    */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter) {
-    return ingredientRepository.getAllByNameContainingOrderByNameAsc(filter);
+    return ingredientRepository.getAllByNameOrderByNameAsc(filter);
   }
 
   /**
@@ -68,11 +64,11 @@ public class IngredientController {
    * @return - Returns the Ingredient name and Quantity for an existing Ingredient
    */
   // TODO verify if this is OK
-  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public String getAmount(@PathVariable long id) {
-    Ingredient existingIngredient = get(id);
-    return existingIngredient.getQuantity();
-  }
+//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public String getAmount(@PathVariable long id) {
+//    Ingredient existingIngredient = get(id);
+//    return existingIngredient.getQuantity();
+//  }
 
   // TODO Determine if this belongs in the ListItem or Meal class instead
 //  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)

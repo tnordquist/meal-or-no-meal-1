@@ -16,12 +16,12 @@ public interface UserRepository extends JpaRepository<User,Long> {
    * @return
    */
   @Query
-  Iterable<User> getAllByOrdOrderByNameAsc();
+  Iterable<User> getAllByOrderByNameAsc();
 
   /**
    * This first find by oauth key looks for the key that is given by the client.
    * @param oauthKey
    * @return
    */
-  Optional<User> findFirstByOauthKey(String oauthKey);
+//  Optional<User> findFirstByOauthKey(String oauthKey);
 }

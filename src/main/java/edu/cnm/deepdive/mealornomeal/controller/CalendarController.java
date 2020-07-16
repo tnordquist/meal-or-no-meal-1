@@ -68,10 +68,10 @@ public class CalendarController {
    * @param filter
    * @return calendarRepository
    */
-  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Calendar> searchByName(@RequestParam(name = "q", required = true) String filter) {
-    return calendarRepository.getAllByNameOrderByDateAsc(filter);
-  }
+//  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+//  public Iterable<Calendar> searchByName(@RequestParam(name = "q", required = true) String filter) {
+//    return calendarRepository.getAllByNameOrderByDateAsc(filter);
+//  }
 
   /**
    * This @Get method allows user to search for a created calendar by date.
@@ -79,10 +79,10 @@ public class CalendarController {
    * @return calendarRepository
    */
 
-//  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Calendar> searchByDate(@RequestParam(name = "q", required = true) long filter) {
-//    return calendarRepository.getAllByDate(filter);
-//  }
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Calendar> searchByDate(@RequestParam(name = "q", required = true) long filter) {
+    return calendarRepository.getAllByDate(filter);
+  }
 
 
   /**

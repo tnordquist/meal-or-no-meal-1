@@ -23,11 +23,11 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Component
-@Table(
-    indexes = {
-        @Index(columnList = "name")
-    }
-)
+//@Table(
+//    indexes = {
+//        @Index(columnList = "name")
+//    }
+//)
 
 /**
  * This Calendar Entity Class declares all of its own attributes along

@@ -75,12 +75,12 @@ public class ListItemController {
    * @param id - Id associated with the ingredient
    * @return - Returns the current ListItem entity with the newly updated Quantity
    */
-  //TODO repetitive.
-//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public String getAmount(@PathVariable long id) {
-//    ListItem existingListItem = get(id);
-//    return existingListItem.getQuantity();
-//  }
+
+  @GetMapping(value = "/{id:\\d+}/quantity", produces = MediaType.APPLICATION_JSON_VALUE)
+  public String getAmount(@PathVariable long id) {
+    ListItem existingListItem = get(id);
+    return existingListItem.getQuantity();
+  }
 
   /**
    * Returns the Quantity of the ListItem entity based on Id input.

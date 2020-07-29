@@ -3,8 +3,11 @@ package edu.cnm.deepdive.mealornomeal.controller;
 //TODO push to paul
 import edu.cnm.deepdive.mealornomeal.model.entity.User;
 import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
+import java.util.Optional;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +50,17 @@ public class UserController {
     return userRepository.findById(id).orElseThrow(NoSuchFieldException::new);
   }
 
+  /**
+   * GetMapping
+   * @param auth
+   * @return
+   */
 
+  @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<User> get(Authentication auth) {
+    User user = (auth != null) ? (User) auth.getPrincipal() : null;
+    return ResponseEntity.of(Optional.ofNullable(user));
+  }
 }
+
 

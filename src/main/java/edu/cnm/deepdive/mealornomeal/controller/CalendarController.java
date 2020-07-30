@@ -4,6 +4,7 @@ import edu.cnm.deepdive.mealornomeal.model.entity.Calendar;
 import edu.cnm.deepdive.mealornomeal.model.service.CalendarRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,20 +69,21 @@ public class CalendarController {
    * @param filter
    * @return calendarRepository
    */
-//  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+//  @GetMapping(value = "/search", params = {"q"}, produces = MediaType.APPLICATION_JSON_VALUE)
 //  public Iterable<Calendar> searchByName(@RequestParam(name = "q", required = true) String filter) {
 //    return calendarRepository.getAllByNameOrderByDateAsc(filter);
 //  }
 
   /**
    * This @Get method allows user to search for a created calendar by date.
-   * @param filter
+   * @param from
+   * @param to
    * @return calendarRepository
    */
 
-  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Calendar> searchByDate(@RequestParam(name = "q", required = true) long filter) {
-    return calendarRepository.getAllByDate(filter);
+  @GetMapping(value = "/search", params = {"from", "to"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Calendar> searchByDate(@RequestParam(required = true) LocalDate from, @RequestParam (required = true) LocalDate to) {
+    return calendarRepository.getAllByDateBetweenOrderByDate(from, to);
   }
 
 

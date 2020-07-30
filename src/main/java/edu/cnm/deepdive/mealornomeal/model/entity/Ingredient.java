@@ -51,8 +51,8 @@ public class Ingredient implements FlatIngredient {
    * Many-to-One relationship with User.
    */
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "meal_id")
-  private Meal mealId;
+  @JoinColumn(nullable = false, name = "meal_id")
+  private Meal meal;
 
   public void setName(String name) {
     this.name = name;
@@ -81,7 +81,7 @@ public class Ingredient implements FlatIngredient {
     return quantity;
   }
 
-  public Meal getMealId() {
-    return mealId;
+  public Meal getMeal() {
+    return meal;
   }
 }

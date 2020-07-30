@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -72,8 +73,9 @@ public abstract class Calendar implements FlatCalendar {
   /**
    * This Column declares the mealSlot attribute and its conditions
    */
+  @Enumerated
   @Column(nullable = false)
-  private String mealSlot;
+  private MealSlot mealSlot;
 
 
   /**
@@ -125,17 +127,11 @@ public abstract class Calendar implements FlatCalendar {
     this.date = date;
   }
 
-  /**
-   *This Getter gets the current status of a selected meal slot.
-   */
-  public String getMealSlot() {
+  public MealSlot getMealSlot() {
     return mealSlot;
   }
 
-  /**
-   * This Setter sets the current status of the meal slot.
-   */
-  public void setMealSlot(String mealSlot) {
+  public void setMealSlot(MealSlot mealSlot) {
     this.mealSlot = mealSlot;
   }
 
@@ -167,6 +163,12 @@ public abstract class Calendar implements FlatCalendar {
   private void initHateoas() {
     //noinspection ResultOfMethodCallIgnored
     entityLinks.toString();
+  }
+
+  public enum MealSlot {
+    BREAKFAST,
+    LUNCH,
+    DINNER
   }
 
 }

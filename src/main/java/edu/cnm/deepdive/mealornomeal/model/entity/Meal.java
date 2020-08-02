@@ -78,8 +78,8 @@ public class Meal implements FlatMeal {
    * a specific Meal. The max length of the Requirements is 200 characters.
    */
 
-  @Column(name = "requirements", length = 200)
-  private String required;
+  @Column(length = 200)
+  private String requirements;
 
   /**
    * The column CreatorId in the database that contains the Id of the contributor of a specific Meal.
@@ -165,7 +165,7 @@ public class Meal implements FlatMeal {
    */
 
   public String getRequirements() {
-    return required;
+    return requirements;
   }
 
   /**
@@ -174,7 +174,7 @@ public class Meal implements FlatMeal {
    */
 
   public void setRequirements(String requirements) {
-    this.required = requirements;
+    this.requirements = requirements;
   }
 
   /**

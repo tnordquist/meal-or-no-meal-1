@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class IngredientController {
    * @return returns the Ingredient with the specified Id.
    */
   @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient get(@PathVariable long mealId, @PathVariable long id) {
+  public Ingredient get(@PathVariable long mealId, @PathVariable long id, Authentication auth) {
     return ingredientRepository.findById(id).orElseThrow((NoSuchElementException::new));
   }
 
@@ -58,7 +59,7 @@ public class IngredientController {
    * @return - All Ingredients that fit that filter
    */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter) {
+  public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter, Authentication auth) {
     return ingredientRepository.getAllByNameOrderByNameAsc(filter);
   }
 
@@ -90,8 +91,8 @@ public class IngredientController {
    */
   @PutMapping(value = "/{id:\\d+}",
   consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient putQuantity(@PathVariable long mealId, @RequestBody Ingredient ingredient) {
-    Ingredient existingIngredient = get(mealId, ingredient.getId());
+  public Ingredient putQuantity(@PathVariable long mealId, @RequestBody Ingredient ingredient, Authentication auth) {
+    Ingredient existingIngredient = get(mealId, ingredient.getId(), auth);
     if (ingredient.getQuantity() != null && ingredient.getId() != null){
       existingIngredient.setQuantity(ingredient.getQuantity());
     }
@@ -99,7 +100,7 @@ public class IngredientController {
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Ingredient> post(@PathVariable long mealId, @RequestBody Ingredient ingredient) {
+  public ResponseEntity<Ingredient> post(@PathVariable long mealId, @RequestBody Ingredient ingredient, Authentication auth) {
     mealRepository.findById(mealId)
         .map((meal) -> {
           meal.getIngredients().add(ingredient);

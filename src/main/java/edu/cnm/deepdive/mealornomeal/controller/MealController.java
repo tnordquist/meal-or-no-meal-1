@@ -12,6 +12,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +56,7 @@ public class MealController {
    * @throws - throws a NoSuchElementException if there is no existing Meal with the provided ID
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal get(@PathVariable long id) {
+  public Meal get(@PathVariable long id, Authentication auth) {
     return mealRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
@@ -63,7 +64,7 @@ public class MealController {
    * Allows the user to get a list of Meals sorted by the ID of the user who created them.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Meal> getMeals() {return mealRepository.getAllByOrderByCreator_IdAsc();}
+  public Iterable<Meal> getMeals(Authentication auth) {return mealRepository.getAllByOrderByCreator_IdAsc();}
 
   /**
    * Allows the user to search for meals with names that contain a specified String.
@@ -72,7 +73,7 @@ public class MealController {
    * @return - All meals with names that contain the String filter.
    */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Meal> search(@RequestParam(name = "q", required = true) String filter) {
+  public Iterable<Meal> search(@RequestParam(name = "q", required = true) String filter, Authentication auth) {
     return mealRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
@@ -83,7 +84,7 @@ public class MealController {
    */
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Meal> postCreator(@RequestBody Meal meal) {
+  public ResponseEntity<Meal> postCreator(@RequestBody Meal meal, Authentication auth) {
     if (meal.getCreator() != null && meal.getCreator().getId() != null) {
       meal.setCreator(userRepository.findById(
               meal.getCreator().getId()
@@ -101,8 +102,8 @@ public class MealController {
 
   @PutMapping(value = "/{id:\\d+}/meal-name",
   consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putName(@PathVariable long id, @RequestBody String name) {
-    Meal existingMeal = get(id);
+  public Meal putName(@PathVariable long id, @RequestBody String name, Authentication auth) {
+    Meal existingMeal = get(id, auth);
       existingMeal.setName(name);
     return mealRepository.save(existingMeal);
   }
@@ -115,8 +116,8 @@ public class MealController {
    */
   @PutMapping(value = "/{id:\\d+}/instruction",
       consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putInstruction(@PathVariable long id, @RequestBody String recipe) {
-    Meal existingMeal = get(id);
+  public Meal putInstruction(@PathVariable long id, @RequestBody String recipe, Authentication auth) {
+    Meal existingMeal = get(id, auth);
       existingMeal.setInstruction(recipe);
     return mealRepository.save(existingMeal);
   }
@@ -130,8 +131,8 @@ public class MealController {
 
   @PutMapping(value = "/{id:\\d+}/prep",
       consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putPrepTime(@PathVariable long id, @RequestBody int prepTime) {
-    Meal existingMeal = get(id);
+  public Meal putPrepTime(@PathVariable long id, @RequestBody int prepTime, Authentication auth) {
+    Meal existingMeal = get(id, auth);
       existingMeal.setPrepTime(prepTime);
     return mealRepository.save(existingMeal);
   }
@@ -145,8 +146,8 @@ public class MealController {
 
   @PutMapping(value = "/{id:\\d+}/requirements",
       consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putRequirements(@PathVariable long id, @RequestBody String requirements) {
-    Meal existingMeal = get(id);
+  public Meal putRequirements(@PathVariable long id, @RequestBody String requirements, Authentication auth) {
+    Meal existingMeal = get(id, auth);
       existingMeal.setRequirements(requirements);
     return mealRepository.save(existingMeal);
   }
@@ -158,8 +159,8 @@ public class MealController {
   // TODO set Calendar meal slots containing deleted meal to null
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
-    mealRepository.delete(get(id));
+  public void delete(@PathVariable long id, Authentication auth) {
+    mealRepository.delete(get(id, auth));
   }
 
   }

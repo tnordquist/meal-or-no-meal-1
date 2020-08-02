@@ -60,7 +60,7 @@ public class CalendarController {
    * @return calendarRepository
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Calendar get(@PathVariable long id) {
+  public Calendar get(@PathVariable long id, Authentication auth) {
     return calendarRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
@@ -82,7 +82,7 @@ public class CalendarController {
    */
 
   @GetMapping(value = "/search", params = {"from", "to"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Calendar> searchByDate(@RequestParam(required = true) LocalDate from, @RequestParam (required = true) LocalDate to) {
+  public Iterable<Calendar> searchByDate(@RequestParam(required = true) LocalDate from, @RequestParam (required = true) LocalDate to, Authentication auth) {
     return calendarRepository.getAllByDateBetweenOrderByDate(from, to);
   }
 
@@ -96,7 +96,7 @@ public class CalendarController {
 
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Calendar> postCalendarId(@RequestBody Calendar calendar) {
+  public ResponseEntity<Calendar> postCalendarId(@RequestBody Calendar calendar, Authentication auth) {
     if (calendar.getMealSlot() != null && calendar.getMealSlot() != null) {
       calendar.setCreator(userRepository.findById(
           calendar.getCreator().getId()
@@ -115,8 +115,8 @@ public class CalendarController {
 
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Calendar put(@PathVariable long id, @RequestBody Calendar calendar) {
-    Calendar existingCalendar = get(id);
+  public Calendar put(@PathVariable long id, @RequestBody Calendar calendar, Authentication auth) {
+    Calendar existingCalendar = get(id, auth);
     if (calendar.getId() != null) {
       existingCalendar.setId(calendar.getId());
     }
@@ -130,8 +130,8 @@ public class CalendarController {
    */
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
-    calendarRepository.delete(get(id));
+  public void delete(@PathVariable long id, Authentication auth) {
+    calendarRepository.delete(get(id, auth));
   }
 
 // TODO Figure out how to write a DELETE method to delete a meal from a calendar meal slot.

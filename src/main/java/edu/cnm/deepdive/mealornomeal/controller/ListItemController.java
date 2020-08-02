@@ -10,6 +10,7 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +56,7 @@ public class ListItemController {
    * @return - Returns the List Item
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ListItem get(@PathVariable long id) {
+  public ListItem get(@PathVariable long id, Authentication auth) {
     return listRepository.findById(id)
         .orElseThrow(NoSuchElementException::new);
   }
@@ -66,7 +67,7 @@ public class ListItemController {
    * @return filtered ListItems by Name
    */
   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<ListItem> search(@RequestParam(name = "q", required = true) String filter) {
+  public Iterable<ListItem> search(@RequestParam(name = "q", required = true) String filter, Authentication auth) {
     return listRepository.getAllByNameContainingOrderByNameAsc(filter);
   }
 
@@ -77,8 +78,8 @@ public class ListItemController {
    */
 
   @GetMapping(value = "/{id:\\d+}/quantity", produces = MediaType.APPLICATION_JSON_VALUE)
-  public String getAmount(@PathVariable long id) {
-    ListItem existingListItem = get(id);
+  public String getAmount(@PathVariable long id, Authentication auth) {
+    ListItem existingListItem = get(id, auth);
     return existingListItem.getQuantity();
   }
 
@@ -90,8 +91,8 @@ public class ListItemController {
    */
   @PutMapping(value = "/{id:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ListItem putQuantity(@PathVariable long id, @RequestBody ListItem listItem) {
-    ListItem existingListItem = get(id);
+  public ListItem putQuantity(@PathVariable long id, @RequestBody ListItem listItem, Authentication auth) {
+    ListItem existingListItem = get(id, auth);
     if (listItem.getQuantity() != null && listItem.getId() != null) {
       existingListItem.setQuantity(listItem.getListItem());
     }
@@ -105,7 +106,7 @@ public class ListItemController {
    */
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ListItem> postName(@RequestBody ListItem listItem) {
+  public ResponseEntity<ListItem> postName(@RequestBody ListItem listItem, Authentication auth) {
     if (listItem.getUser_id() != null) {
       listItem.setUser_id(userRepository.findById(
           listItem.getUser_id().getId()
@@ -119,8 +120,8 @@ public class ListItemController {
    */
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id) {
-    listRepository.delete(get(id));
+  public void delete(@PathVariable long id, Authentication auth) {
+    listRepository.delete(get(id, auth));
   }
 
 }

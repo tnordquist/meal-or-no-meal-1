@@ -34,7 +34,7 @@ public class UserController {
    */
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<User> getAll() {
+  public Iterable<User> getAll(Authentication auth) {
     return userRepository.getAllByOrderByNameAsc();
   }
 
@@ -46,7 +46,7 @@ public class UserController {
    */
 
   @GetMapping(value ="/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public User get(@PathVariable long id ) throws NoSuchFieldException {
+  public User get(@PathVariable long id, Authentication auth) throws NoSuchFieldException {
     return userRepository.findById(id).orElseThrow(NoSuchFieldException::new);
   }
 

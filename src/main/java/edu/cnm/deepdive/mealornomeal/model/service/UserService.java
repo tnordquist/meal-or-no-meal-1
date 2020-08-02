@@ -1,8 +1,10 @@
 package edu.cnm.deepdive.mealornomeal.model.service;
 
+import edu.cnm.deepdive.mealornomeal.exception.AccessDeniedException;
 import edu.cnm.deepdive.mealornomeal.model.entity.User;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
@@ -43,4 +45,13 @@ public class UserService {
     return userRepository.findById(id);
   }
 
+  public Optional<User> get(Authentication auth){
+    return Optional.ofNullable((User) auth.getPrincipal());
+  }
+
+  public void requireAccess(User current, User required){
+   if (required == null || current == null || !current.getId().equals(required.getId())){
+     throw new AccessDeniedException();
+   }
+  }
 }

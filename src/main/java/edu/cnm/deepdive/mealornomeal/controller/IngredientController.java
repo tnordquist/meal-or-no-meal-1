@@ -1,9 +1,12 @@
 package edu.cnm.deepdive.mealornomeal.controller;
 
+import edu.cnm.deepdive.mealornomeal.exception.AccessDeniedException;
 import edu.cnm.deepdive.mealornomeal.model.entity.Ingredient;
 import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.ListRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
+import edu.cnm.deepdive.mealornomeal.model.service.UserService;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -25,90 +28,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/meals/{mealId:\\d+}/ingredients")
+@RequestMapping("/shopping-lists")
 @ExposesResourceFor(Ingredient.class)
 public class IngredientController {
 
   /**
-   * Ingredient Controller utilizes the Ingredient repository to load ingredients for meal entities.
+   * Ingredient Controller utilizes the Ingredient repository to load ingredients for meal
+   * entities.
+   *
    * @param - Takes a ingredientRepository parameter
    */
   private final IngredientRepository ingredientRepository;
-  private final MealRepository mealRepository;
+  private final UserService userService;
 
   @Autowired
   public IngredientController(IngredientRepository ingredientRepository,
-      MealRepository mealRepository, ListRepository listRepository){
+      UserService userService) {
     this.ingredientRepository = ingredientRepository;
-    this.mealRepository = mealRepository;
+    this.userService = userService;
   }
 
   /**
    * Allows the user to get a specific Ingredient entity based on Id.
+   *
    * @param id The Primary Key
    * @return returns the Ingredient with the specified Id.
    */
-  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient get(@PathVariable long mealId, @PathVariable long id, Authentication auth) {
-    return ingredientRepository.findById(id).orElseThrow((NoSuchElementException::new));
-  }
-
-  /**
-   * Searches for Ingredients and sorts name in ascending order
-   * @param filter - String input provided by user
-   * @return - All Ingredients that fit that filter
-   */
-  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Ingredient> search(@RequestParam(name = "q", required = true) String filter, Authentication auth) {
-    return ingredientRepository.getAllByNameOrderByNameAsc(filter);
-  }
-
-  /**
-   * Gets the values for Ingredient name and Quantity based on Ingredient's Primary Key
-   * @param id - The Ingredient's Primary Key and identifier
-   * @return - Returns the Ingredient name and Quantity for an existing Ingredient
-   */
-//   TODO verify if this is OK
-//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public String getAmount(@PathVariable long id) {
-//    Ingredient existingIngredient = get(id);
-//    return existingIngredient.getQuantity();
-//  }
-
-  // TODO Update our ERD to reflect changes between Meal and Ingredient... and possibly Calendar
-  // TODO Determine if this belongs in the ListItem or Meal class instead
-//  @GetMapping(value = "{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-//  public Iterable<Meal> getIngredients(@PathVariable long id) {
-//    return mealRepository.findById(id)
-//        .map(ingredientRepository::)
-//  }
-
-  /**
-   * Returns the Quantity of the Ingredient entity based on Id input.
-   * @param mealId - Id associated with the meal
-   * @param ingredient - The body of the Ingredient entity
-   * @return - Returns the current Ingredient entity with the newly updated Quantity
-   */
-  @PutMapping(value = "/{id:\\d+}",
-  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient putQuantity(@PathVariable long mealId, @RequestBody Ingredient ingredient, Authentication auth) {
-    Ingredient existingIngredient = get(mealId, ingredient.getId(), auth);
-    if (ingredient.getQuantity() != null && ingredient.getId() != null){
-      existingIngredient.setQuantity(ingredient.getQuantity());
-    }
-    return ingredientRepository.save(ingredient);
-  }
-
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Ingredient> post(@PathVariable long mealId, @RequestBody Ingredient ingredient, Authentication auth) {
-    mealRepository.findById(mealId)
-        .map((meal) -> {
-          meal.getIngredients().add(ingredient);
-          mealRepository.save(meal);
-          return ingredient;
-        })
-        .orElseThrow(NoSuchElementException::new);
-    return ResponseEntity.created(ingredient.getHref()).body(ingredient);
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Ingredient> get(@RequestParam LocalDate start, @RequestParam LocalDate end,
+      Authentication auth) {
+    return userService.get(auth)
+        .map((user) -> ingredientRepository.getAllByDateRange(user.getId(), start, end))
+        .orElseThrow(AccessDeniedException::new);
   }
 
 }

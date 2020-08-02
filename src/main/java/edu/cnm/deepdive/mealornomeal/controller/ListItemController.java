@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("list_items")
 @ExposesResourceFor(ListItem.class)
 public class ListItemController {
-
+//TODO remove when possible
   private final ListRepository listRepository;
   private final UserRepository userRepository;
 

@@ -15,6 +15,8 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.stereotype.Component;
@@ -67,7 +69,7 @@ public abstract class Calendar implements FlatCalendar {
   /**
    * This Column declares the LocalDate attribute and its conditions
    */
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "DATE")
   private LocalDate date;
 
   /**

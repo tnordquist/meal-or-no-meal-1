@@ -24,19 +24,19 @@ import org.springframework.stereotype.Component;
 
 
 @SuppressWarnings("JpaDataSourceORMInspection")
-@Entity
-@Component
-//@Table(
-//    indexes = {
-//        @Index(columnList = "name")
-//    }
-//)
+
 
 /**
  * This Calendar Entity Class declares all of its own attributes along
  * with attributes that are being joined together as foreign keys.
  */
-
+@Entity
+@Component
+@Table(
+    indexes = {
+        @Index(columnList = "creator_id, date, meal_slot", unique = true)
+    }
+)
 public abstract class Calendar implements FlatCalendar {
 
   private static EntityLinks entityLinks;
@@ -63,7 +63,7 @@ public abstract class Calendar implements FlatCalendar {
    * It also gives the Calendar entity aces to the User Entity attributes"
    */
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "creator_id", nullable = false, updatable = false)
   private User creator;
 
   /**
@@ -76,7 +76,7 @@ public abstract class Calendar implements FlatCalendar {
    * This Column declares the mealSlot attribute and its conditions
    */
   @Enumerated
-  @Column(nullable = false)
+  @Column(name = "meal_slot", nullable = false)
   private MealSlot mealSlot;
 
 

@@ -26,15 +26,15 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-//  public synchronized User readOrCreateOne(String oauthKey, String name) {
-//    return userRepository.findFirstByOauthKey(oauthKey)
-//        .orElseGet(() -> {
-//          User user = new User();
-//          user.setOauthKey(oauthKey);
-//          user.setName(name);
-//          return userRepository.save(user);
-//        });
-//  }
+  public synchronized User readOrCreateOne(String oauthKey, String name) {
+    return userRepository.findFirstByOauthKey(oauthKey)
+        .orElseGet(() -> {
+          User user = new User();
+          user.setOauthKey(oauthKey);
+          user.setName(name);
+          return userRepository.save(user);
+        });
+  }
 
   /**
    * gets the long id and returns the user Repository by the Id.

@@ -23,5 +23,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
    * @param oauthKey
    * @return
    */
-//  Optional<User> findFirstByOauthKey(String oauthKey);
+  Optional<User> findFirstByOauthKey(String oauthKey);
 }

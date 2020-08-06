@@ -75,6 +75,7 @@ public class MealController {
     return mealRepository.getAllByOrderByName();
   }
 
+
   /**
    * Allows the user to search for meals with names that contain a specified String. It returns all
    * matching meals in ascending alphabetical order.
@@ -108,7 +109,6 @@ public class MealController {
         })
         .orElseThrow(AccessDeniedException::new);
   }
-
   /**
    * Allows the user to edit the name of a meal they have created.
    *
@@ -116,7 +116,6 @@ public class MealController {
    * @param name - The body of the Meal entity containing the Name attribute the user is editing
    * @return - Returns the current Meal entity with the newly updated Name
    */
-
   @PutMapping(value = "/{id:\\d+}/meal-name",
       consumes = {MediaType.APPLICATION_JSON_VALUE,
           MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)

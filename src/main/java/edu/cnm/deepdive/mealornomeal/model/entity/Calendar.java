@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,8 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.stereotype.Component;
@@ -21,19 +24,19 @@ import org.springframework.stereotype.Component;
 
 
 @SuppressWarnings("JpaDataSourceORMInspection")
-@Entity
-@Component
-//@Table(
-//    indexes = {
-//        @Index(columnList = "name")
-//    }
-//)
+
 
 /**
  * This Calendar Entity Class declares all of its own attributes along
  * with attributes that are being joined together as foreign keys.
  */
-
+@Entity
+@Component
+@Table(
+    indexes = {
+        @Index(columnList = "creator_id, date, meal_slot", unique = true)
+    }
+)
 public abstract class Calendar implements FlatCalendar {
 
   private static EntityLinks entityLinks;
@@ -60,20 +63,21 @@ public abstract class Calendar implements FlatCalendar {
    * It also gives the Calendar entity aces to the User Entity attributes"
    */
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "creator_id", nullable = false, updatable = false)
   private User creator;
 
   /**
    * This Column declares the LocalDate attribute and its conditions
    */
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "DATE")
   private LocalDate date;
 
   /**
    * This Column declares the mealSlot attribute and its conditions
    */
-  @Column(nullable = false)
-  private String mealSlot;
+  @Enumerated
+  @Column(name = "meal_slot", nullable = false)
+  private MealSlot mealSlot;
 
 
   /**
@@ -125,17 +129,11 @@ public abstract class Calendar implements FlatCalendar {
     this.date = date;
   }
 
-  /**
-   *This Getter gets the current status of a selected meal slot.
-   */
-  public String getMealSlot() {
+  public MealSlot getMealSlot() {
     return mealSlot;
   }
 
-  /**
-   * This Setter sets the current status of the meal slot.
-   */
-  public void setMealSlot(String mealSlot) {
+  public void setMealSlot(MealSlot mealSlot) {
     this.mealSlot = mealSlot;
   }
 
@@ -167,6 +165,12 @@ public abstract class Calendar implements FlatCalendar {
   private void initHateoas() {
     //noinspection ResultOfMethodCallIgnored
     entityLinks.toString();
+  }
+
+  public enum MealSlot {
+    BREAKFAST,
+    LUNCH,
+    DINNER
   }
 
 }

@@ -3,6 +3,8 @@ package edu.cnm.deepdive.mealornomeal.model.service;
 //import android.nfc.Tag; -- commented this out to remove error. Not sure it's needed but thought
 //I'd retain in-case it was being invoked for a purpose.  - Levi
 import edu.cnm.deepdive.mealornomeal.model.entity.Calendar;
+import edu.cnm.deepdive.mealornomeal.model.entity.User;
+import java.time.LocalDate;
 import javax.xml.transform.Source;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,18 +16,19 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
   /**
    * This @Query organizes the searched calendars by date after getting them by their name.
-   * @param id
+   * @param name
    * @return
    */
-//  @Query
-//  Iterable<Calendar> getAllByNameOrderByDateAsc(String id);
+
+//  Iterable<Calendar> getAllByNameOrderByDateAsc(String name);
 
   /**
    * This @Query organizes the searched calendars by date after searching for them by dates.
-   * @param id
+   * @param date
    * @return
    */
-  @Query
-  Iterable<Calendar> getAllByDate(long id);
 
+  Iterable<Calendar> getAllByDate(LocalDate date);
+
+  Iterable<Calendar> getAllByCreatorAndDateBetweenOrderByDate(User creator, LocalDate from, LocalDate to);
 }

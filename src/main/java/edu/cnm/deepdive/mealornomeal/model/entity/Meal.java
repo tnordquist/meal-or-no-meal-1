@@ -2,6 +2,7 @@ package edu.cnm.deepdive.mealornomeal.model.entity;
 
 import edu.cnm.deepdive.mealornomeal.view.FlatMeal;
 import java.net.URI;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
@@ -75,8 +78,8 @@ public class Meal implements FlatMeal {
    * a specific Meal. The max length of the Requirements is 200 characters.
    */
 
-  @Column(name = "requirements", length = 200)
-  private String required;
+  @Column(length = 200)
+  private String requirements;
 
   /**
    * The column CreatorId in the database that contains the Id of the contributor of a specific Meal.
@@ -85,9 +88,14 @@ public class Meal implements FlatMeal {
    */
 
   @ManyToOne(fetch = FetchType.EAGER,
-  cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   @JoinColumn(name = "creator_id")
   private User creator;
+
+  @OneToMany(mappedBy = "meal", fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @OrderBy("name")
+  private List<Ingredient> ingredients;
 
   /**
    * Gets Id for a specific meal in type Long
@@ -157,7 +165,7 @@ public class Meal implements FlatMeal {
    */
 
   public String getRequirements() {
-    return required;
+    return requirements;
   }
 
   /**
@@ -166,7 +174,7 @@ public class Meal implements FlatMeal {
    */
 
   public void setRequirements(String requirements) {
-    this.required = requirements;
+    this.requirements = requirements;
   }
 
   /**
@@ -184,6 +192,10 @@ public class Meal implements FlatMeal {
 
   public void setCreator(User creator) {
     this.creator = creator;
+  }
+
+  public List<Ingredient> getIngredients() {
+    return ingredients;
   }
 
   /**

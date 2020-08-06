@@ -20,6 +20,6 @@ public interface MealRepository extends JpaRepository <Meal, Long>{
    *
    * @return
    */
-  Iterable<Meal> getAllByOrderByCreator_IdAsc();
+  Iterable<Meal> getAllByOrderByName();
 
 }

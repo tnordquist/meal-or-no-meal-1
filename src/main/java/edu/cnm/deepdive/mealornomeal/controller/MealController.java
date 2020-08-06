@@ -5,7 +5,6 @@ import edu.cnm.deepdive.mealornomeal.model.entity.Ingredient;
 import edu.cnm.deepdive.mealornomeal.model.entity.Meal;
 import edu.cnm.deepdive.mealornomeal.model.service.IngredientRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.MealRepository;
-import edu.cnm.deepdive.mealornomeal.model.service.UserRepository;
 import edu.cnm.deepdive.mealornomeal.model.service.UserService;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class MealController {
    * @throws - throws a NoSuchElementException if there is no existing Meal with the provided ID
    */
   @GetMapping(value = "/{id:\\d+}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal get(@PathVariable long id, Authentication auth) {
+  public Meal get(@PathVariable Long id, Authentication auth) {
     return mealRepository.findById(id).orElseThrow(NoSuchElementException::new);
   }
 
@@ -121,7 +120,7 @@ public class MealController {
   @PutMapping(value = "/{id:\\d+}/meal-name",
       consumes = {MediaType.APPLICATION_JSON_VALUE,
           MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putName(@PathVariable long id, @RequestBody String name, Authentication auth) {
+  public Meal putName(@PathVariable Long id, @RequestBody String name, Authentication auth) {
     Meal existingMeal = get(id, auth);
     existingMeal.setName(name);
     return mealRepository.save(existingMeal);
@@ -138,7 +137,7 @@ public class MealController {
   @PutMapping(value = "/{id:\\d+}/instruction",
       consumes = {MediaType.APPLICATION_JSON_VALUE,
           MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putInstruction(@PathVariable long id, @RequestBody String recipe,
+  public Meal putInstruction(@PathVariable Long id, @RequestBody String recipe,
       Authentication auth) {
     Meal existingMeal = get(id, auth);
     existingMeal.setInstruction(recipe);
@@ -157,7 +156,7 @@ public class MealController {
   @PutMapping(value = "/{id:\\d+}/prep",
       consumes = {MediaType.APPLICATION_JSON_VALUE,
           MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putPrepTime(@PathVariable long id, @RequestBody int prepTime, Authentication auth) {
+  public Meal putPrepTime(@PathVariable Long id, @RequestBody int prepTime, Authentication auth) {
     Meal existingMeal = get(id, auth);
     existingMeal.setPrepTime(prepTime);
     return mealRepository.save(existingMeal);
@@ -175,7 +174,7 @@ public class MealController {
   @PutMapping(value = "/{id:\\d+}/requirements",
       consumes = {MediaType.APPLICATION_JSON_VALUE,
           MediaType.TEXT_PLAIN_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Meal putRequirements(@PathVariable long id, @RequestBody String requirements,
+  public Meal putRequirements(@PathVariable Long id, @RequestBody String requirements,
       Authentication auth) {
     Meal existingMeal = get(id, auth);
     existingMeal.setRequirements(requirements);
@@ -184,7 +183,7 @@ public class MealController {
 
   @PostMapping(value = "/{id:\\d+}/ingredients",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Ingredient> postIngredient(@PathVariable long id,
+  public ResponseEntity<Ingredient> postIngredient(@PathVariable Long id,
       @RequestBody Ingredient ingredient,
       Authentication auth) {
     return userService.get(auth)
@@ -204,7 +203,7 @@ public class MealController {
   }
 
   @GetMapping(value = "/{id:\\d+}/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Ingredient> getIngredients(@PathVariable long id, Authentication auth) {
+  public Iterable<Ingredient> getIngredients(@PathVariable Long id, Authentication auth) {
     return mealRepository.findById(id)
         .map((meal) -> meal.getIngredients())
         .orElseThrow(NoSuchElementException::new);
@@ -212,7 +211,7 @@ public class MealController {
 
   @PutMapping(value = "/{id:\\d+}/ingredients/{ingredientId:\\d+}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Ingredient putIngredient(@PathVariable long id, @PathVariable long ingredientId,
+  public Ingredient putIngredient(@PathVariable Long id, @PathVariable long ingredientId,
       @RequestBody Ingredient ingredient, Authentication auth) {
     return userService.get(auth)
         .flatMap((user) ->
@@ -239,7 +238,7 @@ public class MealController {
 
   @DeleteMapping(value = "/{id:\\d+}/ingredients/{ingredientId:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteIngredient(@PathVariable long id, @PathVariable long ingredientId,
+  public void deleteIngredient(@PathVariable Long id, @PathVariable long ingredientId,
       Authentication auth) {
     //noinspection ResultOfMethodCallIgnored
     userService.get(auth)
@@ -268,7 +267,7 @@ public class MealController {
   // TODO set Calendar meal slots containing deleted meal to null
   @DeleteMapping(value = "/{id:\\d+}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable long id, Authentication auth) {
+  public void delete(@PathVariable Long id, Authentication auth) {
     mealRepository.delete(get(id, auth));
   }
 

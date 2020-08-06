@@ -1,7 +1,9 @@
 package edu.cnm.deepdive.mealornomeal.view;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import edu.cnm.deepdive.mealornomeal.model.entity.Calendar.MealSlot;
 import java.net.URI;
+import java.time.LocalDate;
 import org.springframework.lang.NonNull;
 
 /**
@@ -14,8 +16,9 @@ public interface FlatCalendar {
 
     Long getId();
 
-    @NonNull
-    String getName();
+    LocalDate getDate();
+
+    MealSlot getMealSlot();
 
     URI getHref();
 

@@ -15,8 +15,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.stereotype.Component;
@@ -37,7 +35,7 @@ import org.springframework.stereotype.Component;
         @Index(columnList = "creator_id, date, meal_slot", unique = true)
     }
 )
-public abstract class Calendar implements FlatCalendar {
+public class Calendar implements FlatCalendar {
 
   private static EntityLinks entityLinks;
 
@@ -149,7 +147,7 @@ public abstract class Calendar implements FlatCalendar {
    * @param entityLinks
    */
   @Autowired
-  public static void setEntityLinks(EntityLinks entityLinks) {
+  public void setEntityLinks(EntityLinks entityLinks) {
     Calendar.entityLinks = entityLinks;
   }
 
